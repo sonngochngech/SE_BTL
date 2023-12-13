@@ -2,7 +2,7 @@ const generateToken = require("../config/jwtToken")
 const User = require("../models/userModel")
 const asyncHandler = require("express-async-handler")
 
-//functionnnnn
+//function
 const createUser = asyncHandler(async (req, res) => {
 
 })
