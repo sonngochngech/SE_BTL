@@ -9,6 +9,7 @@ import {PrivateRoute} from "./route/PrivateRoute";
 import FeeAndContributionList from "./pages/GetFeeAndContributionPages/feeAndContributionList";
 import CreateHouseholdFeeList from "./pages/GetFeeAndContributionPages/CreateHouseholdFeeList";
 import FeeHouseholdList from "./pages/GetFeeAndContributionPages/FeeHouseholdList";
+import  Statistic  from './pages/statistic/Statistic';
 
 
 
@@ -24,6 +25,9 @@ function App() {
                   <Route path="/GetFACMana" element={<PrivateRoute element={<FeeAndContributionList/>}/>}></Route>
                   <Route path="/HouseholdFeeList/create" element={<PrivateRoute element={<CreateHouseholdFeeList/>}></PrivateRoute>}></Route>
                   <Route path="/HouseholdFeeList/:id" element={<PrivateRoute element={<FeeHouseholdList/>}></PrivateRoute> }></Route>
+                  <Route path="/GetStatistic" element={<PrivateRoute element={<Statistic/>}/>}></Route>
+
+              
               </Routes>
           </BrowserRouter>
       </>
