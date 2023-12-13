@@ -18,11 +18,11 @@ const Statistic = () => {
     }
     
     const rows = [
-        createData('Frozen yoghurt', 15000),
-        createData('Ice cream sandwich', 237000),
-        createData('Eclair', 262000),
-        createData('Cupcake', 30500),
-        createData('Gingerbread', 356000),
+        createData('Nguyễn Văn An', 15000),
+        createData('Hoàng Ngọc Huy', 237000),
+        createData('Trương Quốc Đạt', 262000),
+        createData('Lưu Văn Trường', 30500),
+        createData('Nguyễn Quốc Anh', 356000),
     ];
 
     const content = (
