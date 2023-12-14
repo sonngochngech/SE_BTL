@@ -35,8 +35,11 @@ export default function MainListItems() {
                         <ListItemText primary={<span style={{fontSize: '15px'}}>Quản lý cán bộ</span>}/>
                     </Accordion.Header>
                     <Accordion.Body>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-
+                        {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do */}
+                        <ListGroup>
+                            <ListGroup.Item onClick={() => navigate("/GetCANBOMana")}>Xem cán bộ</ListGroup.Item>
+                            <ListGroup.Item onClick={() => navigate("/AddCANBO")}>Thêm cán bộ</ListGroup.Item>
+                        </ListGroup>
                     </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="2">
@@ -48,7 +51,6 @@ export default function MainListItems() {
                     </Accordion.Header>
                     <Accordion.Body>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-
                     </Accordion.Body>
                 </Accordion.Item>
                 <Accordion.Item eventKey="3">
