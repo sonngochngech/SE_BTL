@@ -18,6 +18,7 @@ export const getHouseholdsBasedOnParams = createAsyncThunk(
 )
 
 
+
 const householdState = {
     households: [],
     status: "",

@@ -11,7 +11,13 @@ import Layout from "../Layout";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {useParams} from "react-router-dom";
-import {getFeeHouseholdList, updateDate, updateFeeList, updateStatus} from "../../redux/slices/listSlice";
+import {
+    getContributionHouseholdList,
+    updateDate,
+    updateContributionList,
+    updateStatus,
+    updateContributionAmount, updateContributionDate
+} from "../../redux/slices/listSlice";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DemoContainer} from "@mui/x-date-pickers/internals/demo";
@@ -19,35 +25,46 @@ import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
 import dayjs from "dayjs";
 import Button from "react-bootstrap/Button";
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-
-export default function FeeHouseholdList() {
+import Nav from "react-bootstrap/Nav";
+export default function ContributionHouseholdList() {
 
     //declare
     const {id} = useParams();
     const [firstTime, setFirstTime] = React.useState([]);
     const [checkFirstTime, setCheckFirstTime] = React.useState([]);
     const [selectedDates, setSelectedDates] = React.useState({});
-    const listState = useSelector((state) => state?.list?.feeList);
+    const [contributionAmount,setContributionAmount]=React.useState([]);
+    const listState = useSelector((state) => state?.list?.contributionList);
+    // console.log("qưeeee");
+    // console.log(listState);
     const dispatch = useDispatch();
     //get first time data
     useEffect(() => {
-        getFeeHouseList();
+        getContributionHouseList();
     }, [dispatch,id]);
-    const getFeeHouseList = () => {
-        dispatch(getFeeHouseholdList(id));
+    const getContributionHouseList = () => {
+        dispatch(getContributionHouseholdList(id));
 
     }
 
     //handle function
-    const handleCheckboxChange = (changedList) => {
+    const handleInputChange = (changedList,event) => {
         // Dispatch an action to update the status in the Redux store
         setCheckFirstTime(prevState => ({
             ...prevState,
             [changedList._id]:2,
         }) );
-        dispatch(updateStatus({id: changedList._id, status: !changedList.status}));
+
+        setContributionAmount((prevState)=>({
+            ...prevState,
+            [changedList._id]:event.target.value,
+
+        }))
+        dispatch(updateContributionAmount({id: changedList._id, amount: event.target.value}));
 
     };
 
@@ -60,34 +77,32 @@ export default function FeeHouseholdList() {
             ...prevState,
             [changedList._id]:2,
         }) );
-        dispatch(updateDate({id: changedList._id, date: dayjs(date).format('MM/DD/YYYY')}))
+        dispatch(updateContributionDate({id: changedList._id, date: dayjs(date).format('MM/DD/YYYY')}))
 
     };
     const handleOnClickSave = () => {
-        const data = listState?.map((feeHousehold) => ({
-            _id: feeHousehold._id,
-            status: feeHousehold?.status,
-            paymentTime: feeHousehold?.paymentTime
+        const data = listState?.map((contributionHousehold) => ({
+            _id: contributionHousehold._id,
+            amount: contributionHousehold?.amount,
+            paymentTime: contributionHousehold?.paymentTime
         }));
-        const feeListData={
-            changedFeeList: data
+        const contributionListData={
+            changedContributionList: data
         }
 
-        dispatch(updateFeeList(feeListData))
+        dispatch(updateContributionList(contributionListData))
             .unwrap()
             .then(()=>{
-                // console.log("sss");
                 window.location.reload();
             })
             .catch((error)=>{
                 console.log("error");
             });
-        // console.log("datttt");
-        // console.log(data);
+
 
     }
 
-    // console.log(listState);
+
     const content = (
         <>
             <Navbar variant="dark" bg="primary" expand="lg">
@@ -101,10 +116,9 @@ export default function FeeHouseholdList() {
                     <TableHead>
                         <TableRow>
                             <TableCell>Hộ khẩu</TableCell>
-                            <TableCell>Số thành viên</TableCell>
-                            <TableCell>Tiền cần nộp</TableCell>
+                            <TableCell style={{width: '400px'}}>Địa chỉ</TableCell>
                             <TableCell>Thời gian</TableCell>
-                            <TableCell>Trạng thái</TableCell>
+                            <TableCell  style={{width: '200px'}}>Tiền đóng góp</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -117,8 +131,7 @@ export default function FeeHouseholdList() {
                                     <TableCell component="th" scope="onelist">
                                         {onelist.household?.name}
                                     </TableCell>
-                                    <TableCell>{onelist.household?.memberNumber}</TableCell>
-                                    <TableCell>{onelist.amount}</TableCell>
+                                    <TableCell>{onelist.household?.address}</TableCell>
                                     <TableCell>
                                         {!(onelist?.paymentTime && !firstTime[onelist._id]) ? (
 
@@ -135,11 +148,19 @@ export default function FeeHouseholdList() {
                                         ) : (onelist.paymentTime).toString().substring(0,onelist.paymentTime.toString().indexOf('T'))}
                                     </TableCell>
                                     <TableCell>
-                                        {(onelist?.status && !checkFirstTime[onelist._id])?(
-                                            <Checkbox checked disabled/>
+                                        {(onelist?.amount && !checkFirstTime[onelist._id])?(
+                                            onelist?.amount
                                         ):(
-                                            <Checkbox defaultChecked={onelist.status}
-                                                      onChange={() => handleCheckboxChange(onelist)}/>
+                                            <InputGroup >
+                                            <Form.Control
+                                            placeholder="Khoản đóng góp"
+                                            aria-label="Username"
+                                            aria-describedby="basic-addon1"
+                                            value={contributionAmount[onelist._id]}
+                                            onChange={(event) => handleInputChange(onelist,event)}
+                                            />
+                                            </InputGroup>
+
                                         )}
                                     </TableCell>
                                 </TableRow>

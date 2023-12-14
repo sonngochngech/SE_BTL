@@ -72,8 +72,8 @@ export default function MainListItems() {
                     </Accordion.Header>
                     <Accordion.Body>
                         <ListGroup>
-                            <ListGroup.Item onClick={() => navigate("/GetFACMana")}>Lập danh sách</ListGroup.Item>
-                            <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
+                            <ListGroup.Item onClick={() => { navigate("/GetFACMana"); window.location.reload(); }}>Lập danh sách</ListGroup.Item>
+                            <ListGroup.Item onClick={()=>navigate("/CreatedList")}>Xem danh sách</ListGroup.Item>
                             <ListGroup.Item>Morbi leo risus</ListGroup.Item>
                             <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
                             <ListGroup.Item>Vestibulum at eros</ListGroup.Item>

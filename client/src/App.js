@@ -9,6 +9,10 @@ import {PrivateRoute} from "./route/PrivateRoute";
 import FeeAndContributionList from "./pages/GetFeeAndContributionPages/feeAndContributionList";
 import CreateHouseholdFeeList from "./pages/GetFeeAndContributionPages/CreateHouseholdFeeList";
 import FeeHouseholdList from "./pages/GetFeeAndContributionPages/FeeHouseholdList";
+import CreatedList from "./pages/GetFeeAndContributionPages/CreatedList";
+import CreateHouseholdContributionList from "./pages/GetFeeAndContributionPages/CreateHouseholdContributionList";
+import ContributionHouseholdList from "./pages/GetFeeAndContributionPages/ContributionHouseholdList";
+import ChangePassword from "./pages/ChangePassword";
 
 
 
@@ -20,10 +24,14 @@ function App() {
                   <Route path="/" element={<PrivateRoute element={<Dashboard/>}/>}></Route>
                   <Route path="/login" element={<SignIn/>}/>
                   <Route path="/dashboard" element={<PrivateRoute element={<Dashboard/>}/>}></Route>
+                  <Route path="/changePassword" element={<PrivateRoute element={<ChangePassword/>}/>}></Route>
                   {/*get fee and contribution management*/}
                   <Route path="/GetFACMana" element={<PrivateRoute element={<FeeAndContributionList/>}/>}></Route>
                   <Route path="/HouseholdFeeList/create" element={<PrivateRoute element={<CreateHouseholdFeeList/>}></PrivateRoute>}></Route>
                   <Route path="/HouseholdFeeList/:id" element={<PrivateRoute element={<FeeHouseholdList/>}></PrivateRoute> }></Route>
+                  <Route path="/CreatedList" element={<PrivateRoute element={<CreatedList/>}/> }></Route>
+                  <Route path="/HouseholdContributionList/create" element={<PrivateRoute element={<CreateHouseholdContributionList/>}></PrivateRoute>}></Route>
+                  <Route path="/HouseholdContributionList/:id" element={<PrivateRoute element={<ContributionHouseholdList/>}></PrivateRoute> }></Route>
               </Routes>
           </BrowserRouter>
       </>

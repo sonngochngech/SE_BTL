@@ -13,6 +13,17 @@ export const loginUser = createAsyncThunk(
 
     }
 )
+export const changePassword=createAsyncThunk(
+    'auth/changePassword',
+    async (userData, thunkAPI) => {
+        try {
+            return await userService.changePassword(userData);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+
+    }
+)
 
 export const logOutUser = createAsyncThunk(
     'auth/logout',
@@ -58,6 +69,15 @@ export const userSlice = createSlice({
                 state.status = 'Successful';
                 state.user = null;
 
+            }).addCase(changePassword.pending, (state) => {
+            state.status = 'Loading';
+
+        })
+            .addCase(changePassword.fulfilled, (state, action) => {
+                state.status = 'Successful';
+            })
+            .addCase(changePassword.rejected, (state, action) => {
+                state.status = 'Rejected';
             })
     }
 

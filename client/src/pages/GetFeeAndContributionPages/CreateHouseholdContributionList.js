@@ -1,4 +1,4 @@
-    import * as React from 'react';
+import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -17,12 +17,13 @@ import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/Button";
 import InputGroup from 'react-bootstrap/InputGroup';
-    import {createFeeList} from "../../redux/slices/listSlice";
+import {createContributionList} from "../../redux/slices/listSlice";
 
-export default function CreateHouseholdFeeList() {
-    // get fee
-    const fee = useLocation();
-    const navigate=useNavigate();
+export default function CreateHouseholdContributionList() {
+    // get contribution
+    const contribution = useLocation();
+
+    const navigate = useNavigate();
     // get value
     const [tableName, setTableName] = useState("");
     const [area, setArea] = useState("");
@@ -45,52 +46,48 @@ export default function CreateHouseholdFeeList() {
 
     useEffect(() => {
         getHousehold();
+        // handleOnclickCreate();
     }, [dispatch]);
-    const getHousehold =async () => {
-         await dispatch(getHouseholdsBasedOnParams({}));
+    const getHousehold = () => {
+        dispatch(getHouseholdsBasedOnParams({}));
     }
-    const handleOnclickCreate =async () => {
+    const handleOnclickCreate = () => {
         const Params = {
             area: area,
             memberNumber: memberNumber,
         }
-         await dispatch(getHouseholdsBasedOnParams(Params))
+        dispatch(getHouseholdsBasedOnParams(Params))
             .unwrap()
             .then((state)=>{
                 console.log(state);
-                    if(state.length===0){
-                        alert("Không có hộ khẩu");
-                    }else{
-                        alert("Tạo thành công");
-                    }
+                if(state.length===0){
+                    alert("Không có hộ khẩu");
+                }else{
+                    alert("Tạo thành công");
+                }
             });
-
+        console.log('Button Clicked with Params:', Params);
     };
 
     const handleOnClickSave = () => {
         const Params = {
             tableName: tableName,
             households: householdState,
-            fee_id: fee?.state?._id,
-            type:"fee"
+            contribution_id: contribution?.state?._id,
+            type:"contribution"
         }
-        dispatch(createFeeList(Params))
+        dispatch(createContributionList(Params))
             .unwrap()
-            .then((state)=>
-                {
-
-                    navigate(`/HouseholdFeeList/${state.id}`);
-
+            .then((state) => {
+                    // console.log("sssss");
+                    // console.log(state);
+                    navigate(`/HouseholdContributionList/${state.id}`);
 
 
                 }
-
             );
 
     }
-
-    // console.log("zzzz");
-    // console.log(householdState);
 
 
     const content = (
@@ -112,22 +109,7 @@ export default function CreateHouseholdFeeList() {
                                     onChange={handleTableNameChange}
                                 />
                             </InputGroup>
-                            <Form.Select size="small" style={{marginRight: "3px"}} value={area}
-                                         onChange={handleAreaChange}>
-                                <option>Khu vực</option>
-                                <option>Quỳnh Lôi</option>
-                                <option>Thanh Nhàn</option>
-                                <option>Bách Khoa</option>
-                            </Form.Select>
-                            <Form.Select size="small" style={{marginRight: "3px"}} value={memberNumber}
-                                         onChange={handleMemberNumberChange}>
-                                <option>Số thành viên lớn hơn</option>
-                                <option>0</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </Form.Select>
-                            <Button variant="light" onClick={()=>handleOnclickCreate()}>Tạo</Button>
+                            <Button variant="light" onClick={handleOnclickCreate}>Tạo</Button>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
@@ -138,10 +120,8 @@ export default function CreateHouseholdFeeList() {
                         <Table sx={{minWidth: 650}} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell style={{width: '200px'}}>Tên chủ hộ</TableCell>
+                                    <TableCell style={{width: '600px'}}>Tên hộ</TableCell>
                                     <TableCell>Địa Chỉ</TableCell>
-                                    <TableCell style={{width: '200px'}}>Số thành viên</TableCell>
-                                    <TableCell style={{width: '150px'}}>Tiền cần nộp</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -151,11 +131,9 @@ export default function CreateHouseholdFeeList() {
                                         sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                     >
                                         <TableCell component="th" scope="row" style={{width: '200px'}}>
-                                            ${row.name}
+                                            {row.name}
                                         </TableCell>
                                         <TableCell>{`so 12 hoang thanh thang long nguyen chu ba ${row.address}`}</TableCell>
-                                        <TableCell style={{width: '200px'}}>{row?.memberNumber}</TableCell>
-                                        <TableCell style={{width: '150px'}}>{row.memberNumber * fee?.state?.amount}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
