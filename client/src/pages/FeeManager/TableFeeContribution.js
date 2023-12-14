@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import Title from "../../Components/Title";
 import { Button, Table } from "react-bootstrap";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import CreateFeeRecurring from "./Component/CreateFeeRecurring";
-import UpdateFeeRecurring from "./Component/UpdateFeeRecurring";
-import { feeState } from "./data";
+import { feeContributeState } from "./data";
 import ModalConfirm from "./Component/ModalConfirm";
+import CreateFeeContribute from "./Component/CreateFeeContribute";
+import UpdateFeeContribute from "./Component/UpdateFeeContribute";
 
-export default function TableFeeRecurring() {
+export default function TableFeeContribution() {
   const [id, setId] = useState(null);
   const [modalCreate, setModalCreate] = useState(false);
   const [modalUpdate, setModalUpdate] = useState(false);
@@ -37,7 +37,7 @@ export default function TableFeeRecurring() {
   return (
     <div>
       <React.Fragment>
-        <Title>Các khoản phí:</Title>
+        <Title>Các khoản phí đóng góp:</Title>
         <div className="d-flex flex-row justify-content-end mb-3">
           <Button variant="primary text-white" onClick={handleShowCreate}>
             Tạo mới
@@ -47,24 +47,22 @@ export default function TableFeeRecurring() {
           <TableHead>
             <TableRow>
               <TableCell>#</TableCell>
-              <TableCell>Tên khoản phí</TableCell>
-              <TableCell>Loại</TableCell>
+              <TableCell>Tên khoản đóng góp</TableCell>
+              <TableCell>Thời gian bắt đầu</TableCell>
+              <TableCell>Thời gian kết thúc</TableCell>
               <TableCell>Số tiền</TableCell>
-              <TableCell>Tần suất</TableCell>
               <TableCell>Mô tả</TableCell>
               <TableCell>Hành động</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {feeState?.map((row, index) => (
+            {feeContributeState?.map((row, index) => (
               <TableRow key={row.id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{row.name}</TableCell>
-                <TableCell>{row.feeType ? row.feeType.name : null}</TableCell>
+                <TableCell>{row.startDate}</TableCell>
+                <TableCell>{row.endDate}</TableCell>
                 <TableCell>{row.money}</TableCell>
-                <TableCell>
-                  {row.frequency ? row.frequency.name : null}
-                </TableCell>
                 <TableCell>{row.description}</TableCell>
                 <TableCell>
                   <Button
@@ -92,7 +90,7 @@ export default function TableFeeRecurring() {
       </React.Fragment>
 
       {modalCreate && (
-        <CreateFeeRecurring
+        <CreateFeeContribute
           show={modalCreate}
           handleClose={handleClose}
           handleShow={handleShowCreate}
@@ -100,7 +98,7 @@ export default function TableFeeRecurring() {
       )}
 
       {modalUpdate && (
-        <UpdateFeeRecurring
+        <UpdateFeeContribute
           show={modalUpdate}
           handleClose={handleClose}
           handleShow={handleShowUpdate}
@@ -113,8 +111,8 @@ export default function TableFeeRecurring() {
           show={modalDelete}
           handleClose={handleClose}
           handleShow={handleShowDelete}
-          title="Xóa thông tin khoản phí"
-          description="Bạn có chắc chắn xóa khoản phí này?"
+          title="Xóa thông tin khoản đóng góp"
+          description="Bạn có chắc chắn xóa khoản đóng góp này?"
         />
       )}
     </div>
