@@ -1,5 +1,6 @@
 const generateToken = require("../config/jwtToken")
 const User = require("../models/userModel")
+const bcrypt = require('bcrypt');
 const asyncHandler = require("express-async-handler")
 
 //function
@@ -13,7 +14,12 @@ const login = asyncHandler(async (request, response) => {
     if(currentUser && (await currentUser.isPasswordMatched(password))){
         response.status(200).send({
             message: "Login Successfully",
-            currentUser,
+            currentUser:{
+                "role":currentUser.role,
+                "position":currentUser.position,
+                "_id":currentUser._id,
+                "email":currentUser.email,
+            },
             token: generateToken(currentUser._id),
         })
     }else{
@@ -21,6 +27,36 @@ const login = asyncHandler(async (request, response) => {
             message:"Login failure",
         })
     }
-})
+});
 
-module.exports={login}
+const changePassword = asyncHandler(async (request, response) => {
+    const { email, oldPassword, newPassword } = request.body;
+
+    // Find the user by email
+    const currentUser = await User.findOne({ email: email });
+
+    if (currentUser && (await currentUser.isPasswordMatched(oldPassword))) {
+        // Check if oldPassword matches the current password
+
+        // Hash the new password
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+        // Update the user's password
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: request.user._id },
+            { password: hashedNewPassword }
+        );
+
+        response.status(200).send({
+            message: 'Password changed successfully',
+            updatedUser,
+            token: generateToken(updatedUser._id),
+        });
+    } else {
+        response.status(401).send({
+            message: 'Invalid credentials or old password does not match',
+        });
+    }
+});
+
+module.exports={login,changePassword}

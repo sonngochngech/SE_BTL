@@ -12,13 +12,15 @@ const getHouseholdBasedOnParams=asyncHandler(async(req,res)=>{
     if(memberNumber){
         querys.memberNumber={$gte:memberNumber};
     }
-    console.log(querys);
+
     const households=await  Household.find(querys);
 
-    res.status(200).send({
-        households,
-        message:'Get households successfully'
-    })
+        res.status(200).send({
+            households,
+            message:'Get households successfully'
+        })
+
+
 
 })
 const createHousehold=asyncHandler(async (req,res)=>{

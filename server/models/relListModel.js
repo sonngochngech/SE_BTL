@@ -7,6 +7,9 @@ const RelListSchema = new mongoose.Schema(
         creator:{
             type:mongoose.Schema.ObjectId,
             ref:'User'
+        },
+        type:{
+            type:String,
         }
     },
     {

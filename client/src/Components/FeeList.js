@@ -17,12 +17,13 @@ function preventDefault(event) {
 }
 
 export default function FeeList() {
+    console.log(localStorage.getItem('token'));
     const dispatch = useDispatch();
     const feeState = useSelector((state) => state?.fee?.fees);
     const navigate = useNavigate();
     useEffect(() => {
         getFees();
-    }, []);
+    }, [dispatch]);
     const getFees = () => {
         dispatch(getAllFees());
     }

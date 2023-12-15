@@ -11,11 +11,9 @@ const ContributionHouseholdRelSchema = new mongoose.Schema(
         },
         paymentTime:{
             type:Date,
-            required:true,
         },
         amount:{
             type:Number,
-            required:true,
         },
         status:{
             type: Boolean,
