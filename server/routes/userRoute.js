@@ -6,9 +6,9 @@ router.get("/test",(req,res)=>{
     res.send("OK")
 });
 router.get("/list",authMiddleware,listUser);
-router.post("/get",authMiddleware,getUser);
+router.post("/get",authMiddleware,isLeaderOrDeputyLeader,getUser);
 // router.post("/create",authMiddleware,isLeaderOrDeputyLeader,createUser);
 // router.post("/delete",authMiddleware,isLeaderOrDeputyLeader,deleteUser);
-router.post("/create",authMiddleware,createUser);
-router.post("/delete",authMiddleware,deleteUser);
+router.post("/create",authMiddleware,isLeaderOrDeputyLeader,createUser);
+router.post("/delete",authMiddleware,isLeaderOrDeputyLeader,deleteUser);
 module.exports=router;

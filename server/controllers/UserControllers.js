@@ -43,7 +43,10 @@ const getUser=asyncHandler(async(req,res)=>{
     })
 })
 const createUser=asyncHandler(async (req,res)=>{
+    console.log(req.body.password)
     const newUser=await User.create(req.body);
+    console.log(newUser.password)
+
     res.status(200).send({
         newUser
     })
