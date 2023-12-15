@@ -5,7 +5,7 @@ import './App.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/DashBoard";
-import {PrivateRoute} from "./route/PrivateRoute";
+import {AdminWrap, PrivateRoute} from "./route/PrivateRoute";
 import FeeAndContributionList from "./pages/GetFeeAndContributionPages/feeAndContributionList";
 import CreateHouseholdFeeList from "./pages/GetFeeAndContributionPages/CreateHouseholdFeeList";
 import FeeHouseholdList from "./pages/GetFeeAndContributionPages/FeeHouseholdList";
@@ -24,8 +24,8 @@ function App() {
                   <Route path="/dashboard" element={<PrivateRoute element={<Dashboard/>}/>}></Route>
                   {/*get fee and contribution management*/}
                   <Route path="/GetFACMana" element={<PrivateRoute element={<FeeAndContributionList/>}/>}></Route>
-                  <Route path="/GetCANBOMana" element={<PrivateRoute element={<CanBoManagement/>}/>}></Route>
-                  <Route path="/AddCANBO" element={<PrivateRoute element={<CanBoAdd/>}/>}></Route>
+                  <Route path="/GetCANBOMana" element={<AdminWrap element={<CanBoManagement/>}/>}></Route>
+                  <Route path="/AddCANBO" element={<AdminWrap element={<CanBoAdd/>}/>}></Route>
                   <Route path="/HouseholdFeeList/create" element={<PrivateRoute element={<CreateHouseholdFeeList/>}></PrivateRoute>}></Route>
                   <Route path="/HouseholdFeeList/:id" element={<PrivateRoute element={<FeeHouseholdList/>}></PrivateRoute> }></Route>
               </Routes>

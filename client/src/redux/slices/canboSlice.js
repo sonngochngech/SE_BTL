@@ -46,6 +46,17 @@ export const deleteUserByEmail = createAsyncThunk(
 
     }
 )
+export const isAdmin = createAsyncThunk(
+    'canbo/delete',
+    async (thunkAPI) => {
+        try {
+            return await canboService.isAdmin();
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+
+    }
+)
 // const canBoState = {
 //     fees: [],
 //     list: "",

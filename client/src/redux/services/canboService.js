@@ -59,11 +59,22 @@ const deleteUserByEmail = async (email) => {
         throw new Error(e.message);
     }
 }
+const isAdmin = async () => {
+    try {
+        const response = await axios.get(`${base_url}canbo/check`,config);
+        if (response) {
+            return true
+        }
+    } catch (e) {
+        return false
+    }
+}
 
 const userService = {
     listUser,
     getUserByEmail,
     createUser,
-    deleteUserByEmail
+    deleteUserByEmail,
+    isAdmin
 }
 export default userService
