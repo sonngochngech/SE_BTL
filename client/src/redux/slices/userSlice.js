@@ -1,3 +1,70 @@
+<<<<<<< HEAD
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {userService} from "../services/userService";
+
+
+export const loginUser = createAsyncThunk(
+    'auth/login',
+    async (userData, thunkAPI) => {
+        try {
+            return await userService.login(userData);
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+
+    }
+)
+
+export const logOutUser = createAsyncThunk(
+    'auth/logout',
+    async (thunkAPI) => {
+        try {
+            return await userService.logout();
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+)
+
+const getUserFromLocalStorage = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
+
+const stateInformation = {
+    user: getUserFromLocalStorage,
+    status: '',
+    message: ''
+}
+export const userSlice = createSlice({
+    name: 'user',
+    initialState: stateInformation,
+    reducers: {
+        setUser: (state, action) => {
+            state.user = action.payload;
+        },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(loginUser.pending, (state) => {
+                state.status = 'Loading';
+
+            })
+            .addCase(loginUser.fulfilled, (state, action) => {
+                state.status = 'Successful';
+                state.user = action.payload;
+            })
+            .addCase(loginUser.rejected, (state, action) => {
+                state.status = 'Rejected';
+                state.message = action.error;
+            })
+            .addCase(logOutUser.fulfilled, (state, action) => {
+                state.status = 'Successful';
+                state.user = null;
+
+            })
+    }
+
+})
+
+=======
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {userService} from "../services/userService";
 
@@ -83,4 +150,5 @@ export const userSlice = createSlice({
 
 })
 
+>>>>>>> e8338ac64a73f6f0571432505f511b97403c48c9
 export default userSlice.reducer;
