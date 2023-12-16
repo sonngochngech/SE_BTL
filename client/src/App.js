@@ -9,16 +9,12 @@ import {AdminWrap, PrivateRoute} from "./route/PrivateRoute";
 import FeeAndContributionList from "./pages/GetFeeAndContributionPages/feeAndContributionList";
 import CreateHouseholdFeeList from "./pages/GetFeeAndContributionPages/CreateHouseholdFeeList";
 import FeeHouseholdList from "./pages/GetFeeAndContributionPages/FeeHouseholdList";
-<<<<<<< HEAD
 import CanBoManagement from './pages/GetCanBoPages/CanBoManagement';
 import CanBoAdd from './pages/GetCanBoPages/CanBoAdd';
-=======
 import CreatedList from "./pages/GetFeeAndContributionPages/CreatedList";
 import CreateHouseholdContributionList from "./pages/GetFeeAndContributionPages/CreateHouseholdContributionList";
 import ContributionHouseholdList from "./pages/GetFeeAndContributionPages/ContributionHouseholdList";
 import ChangePassword from "./pages/ChangePassword";
->>>>>>> 994b55135c5a4dc0da2c51df235206b26c837452
-
 
 
 function App() {
