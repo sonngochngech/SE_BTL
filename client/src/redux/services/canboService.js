@@ -3,7 +3,7 @@ import {base_url,config} from "../../utils/config";
 
 const listUser = async () => {
     try {
-        const response = await axios.get(`${base_url}canbo/list`,config);
+        const response = await axios.get(`${base_url}canbo/list`,config());
         if (response.data) {
             console.log(response)
             return response.data;
@@ -18,7 +18,7 @@ const listUser = async () => {
 }
 const getUserByEmail = async (email) => {
     try {
-        const response = await axios.post(`${base_url}canbo/get`,{"email":email},config);
+        const response = await axios.post(`${base_url}canbo/get`,{"email":email},config());
         if (response?.data) {
             return response.data;
         } else {
@@ -32,7 +32,7 @@ const getUserByEmail = async (email) => {
 }
 const createUser = async (userData) => {
     try {
-        const response = await axios.post(`${base_url}canbo/create`,userData,config);
+        const response = await axios.post(`${base_url}canbo/create`,userData,config());
         if (response.data) {
             return response.data;
         } else {
@@ -47,7 +47,7 @@ const createUser = async (userData) => {
 }
 const deleteUserByEmail = async (email) => {
     try {
-        const response = await axios.post(`${base_url}canbo/delete`,{"email":email},config);
+        const response = await axios.post(`${base_url}canbo/delete`,{"email":email},config());
         if (response.data) {
             return response.data;
         } else {
@@ -61,7 +61,7 @@ const deleteUserByEmail = async (email) => {
 }
 const isAdmin = async () => {
     try {
-        const response = await axios.get(`${base_url}canbo/check`,config);
+        const response = await axios.get(`${base_url}canbo/check`,config());
         if (response) {
             return true
         }

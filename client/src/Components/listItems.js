@@ -60,7 +60,6 @@ export default function MainListItems() {
 					nelement={<></>}
 				/>
 
-<<<<<<< HEAD
 				<Accordion.Item eventKey="2">
 					<Accordion.Header>
 						<ListItemIcon>
@@ -76,48 +75,6 @@ export default function MainListItems() {
 						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 					</Accordion.Body>
 				</Accordion.Item>
-				<Accordion.Item eventKey="3">
-					<Accordion.Header>
-						<ListItemIcon>
-							<BarChartIcon />
-						</ListItemIcon>
-						<ListItemText
-							primary={
-								<span style={{ fontSize: "15px" }}>Quản lý hộ khẩu</span>
-							}
-						/>
-					</Accordion.Header>
-					<Accordion.Body>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-					</Accordion.Body>
-				</Accordion.Item>
-				<Accordion.Item eventKey="4">
-					<Accordion.Header>
-						<ListItemIcon>
-							<LayersIcon />
-						</ListItemIcon>
-						<ListItemText
-							primary={<span style={{ fontSize: "15px" }}>Quản lý phí</span>}
-						/>
-					</Accordion.Header>
-					<Accordion.Body>
-						<ListGroup>
-							<ListGroup.Item onClick={() => navigate("/GetFACMana")}>
-								Lập danh sách
-							</ListGroup.Item>
-							<ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-							<ListGroup.Item>Morbi leo risus</ListGroup.Item>
-							<ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-							<ListGroup.Item>Vestibulum at eros</ListGroup.Item>
-						</ListGroup>
-					</Accordion.Body>
-				</Accordion.Item>
-			</Accordion>
-		</React.Fragment>
-	);
-=======
-                    </Accordion.Body>
-                </Accordion.Item>
                 <Accordion.Item eventKey="3">
                     <Accordion.Header>
                         <ListItemIcon>
@@ -141,9 +98,6 @@ export default function MainListItems() {
                         <ListGroup>
                             <ListGroup.Item onClick={() => { navigate("/GetFACMana"); window.location.reload(); }}>Lập danh sách</ListGroup.Item>
                             <ListGroup.Item onClick={()=>navigate("/CreatedList")}>Xem danh sách</ListGroup.Item>
-                            <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-                            <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-                            <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
                         </ListGroup>
                     </Accordion.Body>
                 </Accordion.Item>
@@ -151,5 +105,4 @@ export default function MainListItems() {
         </React.Fragment>
 
     )
->>>>>>> 994b55135c5a4dc0da2c51df235206b26c837452
 }

@@ -14,16 +14,16 @@ export const AdminWrap = ({ element, nelement }) => {
 		dispatch(isAdmin())
 			.unwrap()
 			.then((v) => {
-				if (v == true) {
+				if (v === true) {
 					setFlag(2);
 				} else {
                     setFlag(1)
                 }
 			});
 	}, []);
-	if (flag==2) {
+	if (flag===2) {
 		return element;
-	} else if (flag==1) {
+	} else if (flag===1) {
         return nelement ? nelement : <Navigate to="/" replace={true} />;
     } else {
 		return <></>
