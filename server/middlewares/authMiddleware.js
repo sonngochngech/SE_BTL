@@ -20,7 +20,7 @@ const authMiddleware=asyncHandler(async (request,response,next)=>{
 })
 
 const isLeaderOrDeputyLeader=asyncHandler(async (req,res,next)=>{
-   if(req.user.position!=='Leader'||req.user.position!=='DeputyLeader'){
+   if(req.user.position!='Leader'&&req.user.position!='DeputyLeader'){
        return res.status(403).json("You donot have the authority");
    }else{
        next();
