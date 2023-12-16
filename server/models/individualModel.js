@@ -27,4 +27,6 @@ const IndividualSchema = new mongoose.Schema(
         timestamps:true
     }
 );
-module.exports=mongoose.models.Individual|| mongoose.model("Individual",IndividualSchema)
+const Individual = mongoose.models.Individual || mongoose.model("Individual", IndividualSchema);
+
+module.exports = Individual;

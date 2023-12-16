@@ -1,52 +1,51 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Table } from "react-bootstrap";
 import Layout from "../Layout";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getHouseholds } from "../../redux/slices/householdSlice";
 
 function HouseholdList() {
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const households = useSelector((state) => state?.household?.households);
 
-  // Giả định danh sách hộ khẩu
-  const households = [
-    {
-      householdNumber: 1,
-      ownerName: "Nguyễn Văn Nam",
-      numberOfMembers: 2,
-      address: "Số nhà 1, phường A, Quận B, thành phố C",
-    },
+  useEffect(() => {
+    getHouseholdListss();
+  }, [dispatch]);
 
-    // Thêm các dữ liệu  khác nếu cần
-  ];
+  const getHouseholdListss = () => {
+    dispatch(getHouseholds());
+  };
 
-  const handleRowClick = (householdNumber) => {
-    navigate(`/HouseholdList/PopulationList`);
+  console.log(households);
+
+  const handleRowClick = (household) => {
+    navigate(`/PopulationList/${household?._id}`);
   };
 
   const content = (
-    <div>
-      <h2>Danh sách Hộ khẩu</h2>
-      <Table striped bordered hover>
-        <thead>
+      <div>
+        <h2>Danh sách Hộ khẩu</h2>
+        <Table striped bordered hover>
+          <thead>
           <tr>
-            <th>Số hộ khẩu</th>
-            <th>Tên chủ hộ</th>
+            <th>hộ khẩu</th>
             <th>Số thành viên</th>
             <th>Địa chỉ</th>
           </tr>
-        </thead>
-        <tbody>
-          {households.map((household, index) => (
-            <tr key={index} onClick={() => handleRowClick(household.householdNumber)}>
-              <td>{household.householdNumber}</td>
-              <td>{household.ownerName}</td>
-              <td>{household.numberOfMembers}</td>
-              <td>{household.address}</td>
-            </tr>
+          </thead>
+          <tbody>
+          {households?.map((household, index) => (
+              <tr key={index} onClick={() => handleRowClick(household)}>
+                <td>{household?.name}</td>
+                <td>{household?.memberNumber}</td>
+                <td>{household?.address}</td>
+              </tr>
           ))}
-        </tbody>
-      </Table>
-    </div>
+          </tbody>
+        </Table>
+      </div>
   );
 
   return <Layout content={content}></Layout>;

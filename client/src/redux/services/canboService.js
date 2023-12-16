@@ -40,7 +40,6 @@ const createUser = async (userData) => {
         }
 
     } catch (e) {
-        console.log(e.response.data)
         alert("Lỗi thêm cán bộ")
         throw new Error(e.message);
     }
