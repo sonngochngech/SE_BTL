@@ -15,6 +15,7 @@ import Typography from "@mui/material/Typography";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { createUser } from "../../redux/slices/canboSlice";
 import { useDispatch } from "react-redux";
+import {useNavigate} from "react-router-dom";
 const createInfo = (
 	name,
 	label,
@@ -46,6 +47,7 @@ export const canBoInfos = [
 ];
 const CanBoAdd = () => {
 	const dispatch = useDispatch();
+	const navigate=useNavigate();
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
@@ -62,6 +64,8 @@ const CanBoAdd = () => {
 			.unwrap()
 			.then((data) => {
 				alert("User created");
+				navigate("/GetCANBOMana");
+
 			})
 			.catch((error) => {
 				console.log("Create user error:", error);
