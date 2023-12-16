@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -14,7 +12,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import {loginUser} from "../redux/slices/userSlice";
+import {changePassword, loginUser} from "../redux/slices/userSlice";
+import Layout from "./Layout";
 
 function Copyright(props) {
     return (
@@ -31,33 +30,37 @@ function Copyright(props) {
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
 
-const SignIn=()=> {
+
+export  default function ChangePassword(){
+    const defaultTheme = createTheme();
     const dispatch=useDispatch();
     const navigate=useNavigate();
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const value={
-            email: data.get('email'),
-            password:data.get('password')
-        }
-        dispatch(loginUser(value))
-            .unwrap()
-            .then(()=>{
-                navigate('/dashboard');
-                window.location.reload();
-            }).catch((error)=>{
+        if(data.get('secondPassword')!==data.get('newPassword')){
+            alert("Thông tin không nhât quán, mời bạn nhập lại")
+        }else{
+            const value={
+                email: data.get('email'),
+                oldPassword:data.get('oldPassword'),
+                newPassword:data.get('newPassword'),
+            }
+            dispatch(changePassword(value))
+                .unwrap()
+                .then(()=>{
+                    navigate("/login");
+                }).catch((error)=>{
                 console.log('Login error:',error)
+            })
 
-        })
+        }
+
     };
 
-    return (
-        <ThemeProvider theme={defaultTheme}>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
+    const content=(
+
                 <Box
                     sx={{
                         marginTop: 8,
@@ -70,7 +73,7 @@ const SignIn=()=> {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign in
+                        Đổi mật khẩu
                     </Typography>
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                         <TextField
@@ -87,31 +90,48 @@ const SignIn=()=> {
                             margin="normal"
                             required
                             fullWidth
-                            name="password"
-                            label="Password"
+                            name="oldPassword"
+                            label="mật khẩu cũ"
                             type="password"
-                            id="password"
+                            id="oldPassword"
                             autoComplete="current-password"
                         />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="newPassword"
+                            label="nhập mật khẩu mới"
+                            type="password"
+                            id="newPassword"
+                            autoComplete="current-password"
                         />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="secondPassword"
+                            label="nhập lại"
+                            type="password"
+                            id="secondPassword"
+                            autoComplete="current-password"
+                        />
+
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Sign In
+                            Đổi mật khẩu
                         </Button>
                         <Grid container>
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
-            </Container>
-        </ThemeProvider>
+
     );
+    return(
+        <Layout content={content}></Layout>
+    )
 }
-export  default SignIn;

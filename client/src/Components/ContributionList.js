@@ -8,6 +8,7 @@ import Title from './Title';
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {getAllContributions} from "../redux/slices/contributionSlice";
+import {useNavigate} from "react-router-dom";
 
 // Generate Order Data
 
@@ -16,6 +17,7 @@ function preventDefault(event) {
 }
 
 export default function ContributionList() {
+    const navigate=useNavigate();
     const dispatch = useDispatch();
     const contributionState = useSelector((state) => state?.contribution?.contributions);
     useEffect(() => {
@@ -23,6 +25,9 @@ export default function ContributionList() {
     }, []);
     const getContributions = () => {
         dispatch(getAllContributions());
+    }
+    const handleClick = (row) => {
+        navigate('/HouseholdContributionList/create', {state: row});
     }
 
     // console.log("ttsss");
@@ -42,7 +47,7 @@ export default function ContributionList() {
                 </TableHead>
                 <TableBody>
                     {contributionState?.map((row) => (
-                        <TableRow key={row.id}>
+                        <TableRow key={row.id} onClick={() => handleClick(row)}>
                             <TableCell>{row.name}</TableCell>
                             <TableCell>{row.startTime}</TableCell>
                             <TableCell>{row.endTime}</TableCell>

@@ -8,6 +8,7 @@ const listRouter=require("./routes/listRoute")
 const feeRouter=require("./routes/feeRoute");
 const contributionRouter=require("./routes/contributionRoute");
 const householdRouter=require("./routes/householdRoute");
+const canBoRouter=require("./routes/userRoute");
 dbConnect();
 
 // Curb Cores Error by adding a header here
@@ -34,8 +35,7 @@ app.use("/api/list",listRouter);
 app.use("/api/fees",feeRouter);
 app.use("/api/contributions",contributionRouter);
 app.use("/api/households",householdRouter);
-
-
+app.use("/api/canbo",canBoRouter);
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
