@@ -46,7 +46,7 @@ const SignIn=()=> {
         dispatch(loginUser(value))
             .unwrap()
             .then(()=>{
-                navigate('/dashboard');
+                navigate('/GetFACMana');
                 window.location.reload();
             }).catch((error)=>{
                 console.log('Login error:',error)

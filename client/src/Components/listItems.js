@@ -16,25 +16,12 @@ export default function MainListItems() {
 	return (
 		<React.Fragment>
 			<Accordion>
-				<Accordion.Item eventKey="0">
-					<Accordion.Header style={{ fontSize: "small !important" }}>
-						<ListItemIcon>
-							<DashboardIcon />
-						</ListItemIcon>
-						<ListItemText
-							primary={<span style={{ fontSize: "15px" }}>Dashboard</span>}
-						/>
-					</Accordion.Header>
-					<Accordion.Body>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-					</Accordion.Body>
-				</Accordion.Item>
 
 				{/* Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do */}
 				<AdminWrap
 					e
 					element={
-						<Accordion.Item eventKey="1">
+						<Accordion.Item eventKey="0">
 							<Accordion.Header>
 								<ListItemIcon>
 									<ShoppingCartIcon />
@@ -60,7 +47,7 @@ export default function MainListItems() {
 					nelement={<></>}
 				/>
 
-				<Accordion.Item eventKey="2">
+				<Accordion.Item eventKey="1">
 					<Accordion.Header>
 						<ListItemIcon>
 							<PeopleIcon />
@@ -72,10 +59,9 @@ export default function MainListItems() {
 						/>
 					</Accordion.Header>
 					<Accordion.Body>
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
 					</Accordion.Body>
 				</Accordion.Item>
-                <Accordion.Item eventKey="3">
+                <Accordion.Item eventKey="2">
                     <Accordion.Header>
                         <ListItemIcon>
                             <BarChartIcon/>
@@ -83,11 +69,9 @@ export default function MainListItems() {
                         <ListItemText primary={<span style={{fontSize: '15px'}}>Quản lý hộ khẩu</span>}/>
                     </Accordion.Header>
                     <Accordion.Body>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-
                     </Accordion.Body>
                 </Accordion.Item>
-                <Accordion.Item eventKey="4">
+                <Accordion.Item eventKey="3">
                     <Accordion.Header>
                         <ListItemIcon>
                             <LayersIcon/>
