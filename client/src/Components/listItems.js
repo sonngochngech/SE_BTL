@@ -98,6 +98,10 @@ export default function MainListItems() {
                         <ListGroup>
                             <ListGroup.Item onClick={() => { navigate("/GetFACMana"); window.location.reload(); }}>Lập danh sách</ListGroup.Item>
                             <ListGroup.Item onClick={()=>navigate("/CreatedList")}>Xem danh sách</ListGroup.Item>
+                            <ListGroup.Item onClick={() => navigate("/GetStatistic")}>Thống kê</ListGroup.Item>
+                            <ListGroup.Item>Morbi leo risus</ListGroup.Item>
+                            <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
+                            <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
                         </ListGroup>
                     </Accordion.Body>
                 </Accordion.Item>
