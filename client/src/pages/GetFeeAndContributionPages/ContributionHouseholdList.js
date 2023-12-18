@@ -94,8 +94,7 @@ export default function ContributionHouseholdList() {
         dispatch(updateContributionList(contributionListData))
             .unwrap()
             .then((state)=>{
-                navigate(`/HouseholdContributionList/${state.id}`);
-
+                    window.location.reload();
             })
             .catch((error)=>{
                 console.log("error");
