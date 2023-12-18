@@ -10,7 +10,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Layout from "../Layout";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {
     getContributionHouseholdList,
     updateDate,
@@ -34,6 +34,7 @@ export default function ContributionHouseholdList() {
 
     //declare
     const {id} = useParams();
+    const navigate=useNavigate();
     const [firstTime, setFirstTime] = React.useState([]);
     const [checkFirstTime, setCheckFirstTime] = React.useState([]);
     const [selectedDates, setSelectedDates] = React.useState({});
@@ -92,8 +93,9 @@ export default function ContributionHouseholdList() {
 
         dispatch(updateContributionList(contributionListData))
             .unwrap()
-            .then(()=>{
-                window.location.reload();
+            .then((state)=>{
+                navigate(`/HouseholdContributionList/${state.id}`);
+
             })
             .catch((error)=>{
                 console.log("error");
