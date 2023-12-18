@@ -1,10 +1,13 @@
 const express=require("express")
 const {authMiddleware,isLeaderOrDeputyLeader} = require("../middlewares/authMiddleware");
-const StatisticRouter=express.Router();
-const {getFee}=require("../controllers/StatisticController")
+const router=express.Router();
+const { 
+    //getFee, 
+    getFeeHousehold }=require("../controllers/StatisticController")
 
 
-// router.post("/createFAC",authMiddleware,createFACList);
-router.get("/getFee",authMiddleware,getFee);
+// router.get("/getFee",authMiddleware,getFee);
+router.get("/getFeeHousehold",authMiddleware,  getFeeHousehold)
 
-module.exports=StatisticRouter;
+
+module.exports=router;

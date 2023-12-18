@@ -27,3 +27,6 @@ const ContributionHouseholdRelSchema = new mongoose.Schema(
     }
 );
 module.exports=mongoose.models.ContributionHouseholdRel|| mongoose.model("ContributionHouseholdRel",ContributionHouseholdRelSchema)
+
+const ContributionRel = mongoose.models.ContributionRel|| mongoose.model("FeeHouseholdRel",FeeHouseholdRelSchema)
+module.exports= FeeHouseholdRel;

@@ -7,8 +7,8 @@ import Divider from '@mui/material/Divider'
 
 function DetailDialog({ show }) {
   const statistic = {
-    houseHold: "Adam",
-    fee: "500.000 vnd",
+    houseHold: "Nguyễn Văn Phú",
+    fee: "43 vnd",
     paymentTime: "21/12/2022",
     amount: 43,
     status: true,
