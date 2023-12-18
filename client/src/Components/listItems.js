@@ -78,7 +78,7 @@ export default function MainListItems() {
 							</Accordion.Header>
 							<Accordion.Body>
 								<ListGroup>
-									<ListGroup.Item onClick={() =>{  navigate("/HouseholdList"); window.location.reload(); }}>
+									<ListGroup.Item onClick={() =>{  navigate("/HouseholdList");  }}>
 										Xem danh sách hộ khẩu
 									</ListGroup.Item>
 								</ListGroup>
