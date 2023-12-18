@@ -13,16 +13,16 @@ import DetailDialog from './DetailDialog';
 
 const Statistic = () => {
     const [detailDialog, setDetailDialog] = useState(false);
-    function createData(name, money) {
-        return { name, money };
+    function createData(name, money, contribution) {
+        return { name, money, contribution };
     }
     
     const rows = [
-        createData('Nguyễn Văn An', 15000),
-        createData('Hoàng Ngọc Huy', 237000),
-        createData('Trương Quốc Đạt', 262000),
-        createData('Lưu Văn Trường', 30500),
-        createData('Nguyễn Quốc Anh', 356000),
+        createData('Nguyễn Văn An', 15000, 14000),
+        createData('Hoàng Ngọc Huy', 237000, 1000),
+        createData('Trương Quốc Đạt', 262000,500),
+        createData('Lưu Văn Trường', 30500,200),
+        createData('Nguyễn Quốc Anh', 356000,100),
     ];
 
     const content = (
@@ -52,6 +52,7 @@ const Statistic = () => {
                                 <TableRow >
                                     <TableCell>Tên hộ</TableCell>
                                     <TableCell align="left">Số tiền hộ đã nộp</TableCell>
+                                    <TableCell align='left'>Đóng góp</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -65,6 +66,7 @@ const Statistic = () => {
                                             {row.name}
                                         </TableCell>
                                         <TableCell align="left">{row.money}</TableCell>
+                                        <TableCell align='left'>{row.contribution}</TableCell>
                                     
                                     </TableRow>
                                 ))}

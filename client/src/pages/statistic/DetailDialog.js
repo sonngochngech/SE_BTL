@@ -12,6 +12,7 @@ function DetailDialog({ show }) {
     paymentTime: "21/12/2022",
     amount: 43,
     status: true,
+    contribution: 1000,
   }
   const handleClose = () => {
     show(false)
@@ -74,6 +75,14 @@ function DetailDialog({ show }) {
                     readOnly: true
                   }}
                 />
+                  <TextField
+                  label='Đóng góp'
+                  variant='outlined'
+                  defaultValue={statistic.contribution}
+                  InputProps={{
+                    readOnly: true
+                  }}
+                  />
               </Grid>
 
             </Grid>
