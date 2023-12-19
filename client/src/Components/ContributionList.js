@@ -50,8 +50,8 @@ export default function ContributionList() {
                     {contributionState?.map((row) => (
                         <TableRow key={row.id} onClick={() => handleClick(row)}>
                             <TableCell>{row.name}</TableCell>
-                            <TableCell>{row.startTime}</TableCell>
-                            <TableCell>{row.endTime}</TableCell>
+                            <TableCell>{row.startTime.toString().substring(0,row.startTime.toString().indexOf('T'))}</TableCell>
+                            <TableCell>{row.endTime.toString().substring(0,row.endTime.toString().indexOf('T'))}</TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
