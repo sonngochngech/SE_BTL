@@ -110,7 +110,6 @@ export default function MainListItems() {
               <ListGroup.Item
                 onClick={() => {
                   navigate("/GetFACMana");
-                  window.location.reload();
                 }}
               >
                 Lập danh sách
