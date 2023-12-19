@@ -1,27 +1,28 @@
 const mongoose = require("mongoose");
 const ContributionSchema = new mongoose.Schema(
-    {
-        name:{
-            type:String,
-            required:true
-        },
-        amount:{
-            type:Number,
-            required: true,
-        },
-        description:{
-            type:String,
-        },
-        startTime:{
-            Type:Date,
-        },
-        endTime:{
-            Type:Date,
-        }
-
+  {
+    name: {
+      type: String,
+      required: true,
     },
-    {
-        timestamps:true
-    }
+    amount: {
+      type: Number,
+      required: true,
+    },
+    description: {
+      type: String,
+    },
+    startTime: {
+      type: Date,
+    },
+    endTime: {
+      type: Date,
+    },
+  },
+  {
+    timestamps: true,
+  }
 );
-module.exports=mongoose.models.Contribution|| mongoose.model("Contribution",ContributionSchema)
+module.exports =
+  mongoose.models.Contribution ||
+  mongoose.model("Contribution", ContributionSchema);
