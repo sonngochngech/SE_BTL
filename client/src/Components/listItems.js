@@ -45,7 +45,6 @@ export default function MainListItems() {
           }
           nelement={<></>}
         />
-
         <Accordion.Item eventKey="1">
           <Accordion.Header>
             <ListItemIcon>
@@ -87,7 +86,6 @@ export default function MainListItems() {
                   <ListGroup.Item
                     onClick={() => {
                       navigate("/HouseholdList");
-                      window.location.reload();
                     }}
                   >
                     Xem danh sách hộ khẩu

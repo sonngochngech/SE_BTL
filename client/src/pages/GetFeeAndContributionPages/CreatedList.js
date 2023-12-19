@@ -47,6 +47,9 @@ export default function CreatedList() {
         navigate(`/HouseholdFeeList/${item._id}`);
 
     }
+    const handleOnClickContribution=(item)=>{
+        navigate(`/HouseholdContributionList/${item._id}`);
+    }
     const handleDeleteClick=(item)=>{
         dispatch(deleteList(item._id))
             .unwrap()
@@ -54,6 +57,15 @@ export default function CreatedList() {
                 window.location.reload();
             }).catch((error)=>{
                 alert("Xóa thất bại");
+        });
+    }
+    const handleDeleteClickContribution=(item)=>{
+        dispatch(deleteList(item._id))
+            .unwrap()
+            .then(()=>{
+                window.location.reload();
+            }).catch((error)=>{
+            alert("Xóa thất bại");
         });
     }
 
@@ -107,7 +119,7 @@ export default function CreatedList() {
                                     key={item.id}  // Add a unique key prop for each list item
                                     secondaryAction={
                                         <IconButton edge="end" aria-label="delete">
-                                            <DeleteIcon />
+                                            <DeleteIcon   onClick={()=>handleDeleteClickContribution(item)}/>
                                         </IconButton>
                                     }
                                 >
@@ -119,7 +131,7 @@ export default function CreatedList() {
                                     <ListItemText
                                         primary={item.name}
                                         secondary={secondary ? 'Secondary text' : null}
-                                        onClick={()=>handleOnClick(item)}
+                                        onClick={()=>handleOnClickContribution(item)}
                                     />
                                 </ListItem>
                             ))}
