@@ -1,4 +1,5 @@
-import * as React from 'react';
+
+    import * as React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,19 +11,19 @@ import Layout from "../Layout";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {getHouseholdsBasedOnParams} from "../../redux/slices/householdSlice";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from "react-bootstrap/Button";
 import InputGroup from 'react-bootstrap/InputGroup';
+    import {createFeeList} from "../../redux/slices/listSlice";
 
 export default function CreateHouseholdFeeList() {
     // get fee
     const fee = useLocation();
-    console.log("vgb");
-    console.log(fee.state._id);
+    const navigate=useNavigate();
     // get value
     const [tableName, setTableName] = useState("");
     const [area, setArea] = useState("");
@@ -45,18 +46,26 @@ export default function CreateHouseholdFeeList() {
 
     useEffect(() => {
         getHousehold();
-        handleOnclickCreate();
-    }, []);
-    const getHousehold = () => {
-        dispatch(getHouseholdsBasedOnParams({}));
+    }, [dispatch]);
+    const getHousehold =async () => {
+         await dispatch(getHouseholdsBasedOnParams({}));
     }
-    const handleOnclickCreate = () => {
+    const handleOnclickCreate =async () => {
         const Params = {
             area: area,
             memberNumber: memberNumber,
         }
-        dispatch(getHouseholdsBasedOnParams(Params));
-        console.log('Button Clicked with Params:', Params);
+         await dispatch(getHouseholdsBasedOnParams(Params))
+            .unwrap()
+            .then((state)=>{
+                console.log(state);
+                    if(state.length===0){
+                        alert("Không có hộ khẩu");
+                    }else{
+                        alert("Tạo thành công");
+                    }
+            });
+
     };
 
     const handleOnClickSave = () => {
@@ -64,7 +73,20 @@ export default function CreateHouseholdFeeList() {
             tableName: tableName,
             households: householdState,
             fee_id: fee?.state?._id,
+            type:"fee"
         }
+        dispatch(createFeeList(Params))
+            .unwrap()
+            .then((state)=>
+                {
+
+                    navigate(`/HouseholdFeeList/${state.id}`);
+
+
+
+                }
+
+            );
 
     }
 
@@ -74,7 +96,7 @@ export default function CreateHouseholdFeeList() {
 
     const content = (
         <>
-            <Navbar variant="dark" bg="success" expand="lg">
+            <Navbar variant="dark" bg="primary" expand="lg">
                 <Container fluid>
                     <Navbar.Brand>
                         {tableName}
@@ -94,8 +116,9 @@ export default function CreateHouseholdFeeList() {
                             <Form.Select size="small" style={{marginRight: "3px"}} value={area}
                                          onChange={handleAreaChange}>
                                 <option>Khu vực</option>
-                                <option>Ha Noi</option>
-                                <option>Hải Phòng</option>
+                                <option>Quỳnh Lôi</option>
+                                <option>Thanh Nhàn</option>
+                                <option>Bách Khoa</option>
                             </Form.Select>
                             <Form.Select size="small" style={{marginRight: "3px"}} value={memberNumber}
                                          onChange={handleMemberNumberChange}>
@@ -105,7 +128,7 @@ export default function CreateHouseholdFeeList() {
                                 <option>2</option>
                                 <option>3</option>
                             </Form.Select>
-                            <Button variant="light" onClick={handleOnclickCreate}>Tạo</Button>
+                            <Button variant="light" onClick={()=>handleOnclickCreate()}>Tạo</Button>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>
@@ -116,7 +139,7 @@ export default function CreateHouseholdFeeList() {
                         <Table sx={{minWidth: 650}} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell style={{width: '200px'}}>Tên chủ hộ</TableCell>
+                                    <TableCell style={{width: '200px'}}>Tên hộ</TableCell>
                                     <TableCell>Địa Chỉ</TableCell>
                                     <TableCell style={{width: '200px'}}>Số thành viên</TableCell>
                                     <TableCell style={{width: '150px'}}>Tiền cần nộp</TableCell>
@@ -129,27 +152,25 @@ export default function CreateHouseholdFeeList() {
                                         sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                     >
                                         <TableCell component="th" scope="row" style={{width: '200px'}}>
-                                            {`co bao gio em ${row.name}`}
+                                            {row.name}
                                         </TableCell>
                                         <TableCell>{`so 12 hoang thanh thang long nguyen chu ba ${row.address}`}</TableCell>
                                         <TableCell style={{width: '200px'}}>{row?.memberNumber}</TableCell>
-                                        <TableCell style={{width: '150px'}}>{row.memberNumber}</TableCell>
+                                        <TableCell style={{width: '150px'}}>{row.memberNumber * fee?.state?.amount}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
                     <div style={{textAlign: 'center', marginTop: '10px'}}>
-                        <Button variant="success"
+                        <Button variant="primary"
                                 style={{fontSize: '1.5rem', margin: '0 auto', backgroundSize: 'cover'}}
                                 onClick={handleOnClickSave}>
                             Lưu
                         </Button>
                     </div>
                 </>
-            ) : (
-                <h1>KHÔNG TỒN TẠI HỘ KHẨU</h1>
-            )}
+            ) : null}
 
         </>
 

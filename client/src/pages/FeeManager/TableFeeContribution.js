@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import Title from "../../Components/Title";
 import { Button, Table } from "react-bootstrap";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
-import { feeContributeState } from "./data";
 import ModalConfirm from "./Component/ModalConfirm";
 import CreateFeeContribute from "./Component/CreateFeeContribute";
 import UpdateFeeContribute from "./Component/UpdateFeeContribute";
+import { convertDate } from "../../utils/function";
+import { contributionService } from "../../redux/services/contributionService";
 
-export default function TableFeeContribution() {
+export default function TableFeeContribution(props) {
   const [id, setId] = useState(null);
   const [modalCreate, setModalCreate] = useState(false);
   const [modalUpdate, setModalUpdate] = useState(false);
@@ -34,6 +35,16 @@ export default function TableFeeContribution() {
     }
   };
 
+  const handleLoading = () => {
+    props.handleLoading();
+  };
+
+  const handleActionDelete = async () => {
+    await contributionService.deleteContribution(id);
+    setModalDelete(false);
+    props.handleLoading();
+  };
+
   return (
     <div>
       <React.Fragment>
@@ -50,41 +61,40 @@ export default function TableFeeContribution() {
               <TableCell>Tên khoản đóng góp</TableCell>
               <TableCell>Thời gian bắt đầu</TableCell>
               <TableCell>Thời gian kết thúc</TableCell>
-              <TableCell>Số tiền</TableCell>
-              <TableCell>Mô tả</TableCell>
               <TableCell>Hành động</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {feeContributeState?.map((row, index) => (
-              <TableRow key={row.id}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.startDate}</TableCell>
-                <TableCell>{row.endDate}</TableCell>
-                <TableCell>{row.money}</TableCell>
-                <TableCell>{row.description}</TableCell>
-                <TableCell>
-                  <Button
-                    variant="success"
-                    className="me-3"
-                    onClick={() => {
-                      handleShowUpdate(row.id);
-                    }}
-                  >
-                    Cập nhật
-                  </Button>
-                  <Button
-                    variant="danger"
-                    onClick={() => {
-                      handleShowDelete();
-                    }}
-                  >
-                    Xóa
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {props.data
+              ? props.data.map((row, index) => (
+                  <TableRow key={row._id}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{row.name}</TableCell>
+                    <TableCell>{convertDate(row.startTime)}</TableCell>
+                    <TableCell>{convertDate(row.endTime)}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="success"
+                        className="me-3"
+                        onClick={() => {
+                          handleShowUpdate(row._id);
+                        }}
+                      >
+                        Cập nhật
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => {
+                          handleShowDelete();
+                          setId(row._id);
+                        }}
+                      >
+                        Xóa
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              : null}
           </TableBody>
         </Table>
       </React.Fragment>
@@ -94,6 +104,7 @@ export default function TableFeeContribution() {
           show={modalCreate}
           handleClose={handleClose}
           handleShow={handleShowCreate}
+          handleLoading={handleLoading}
         />
       )}
 
@@ -102,6 +113,8 @@ export default function TableFeeContribution() {
           show={modalUpdate}
           handleClose={handleClose}
           handleShow={handleShowUpdate}
+          handleLoading={handleLoading}
+          data={props.data}
           id={id}
         />
       )}
@@ -113,6 +126,7 @@ export default function TableFeeContribution() {
           handleShow={handleShowDelete}
           title="Xóa thông tin khoản đóng góp"
           description="Bạn có chắc chắn xóa khoản đóng góp này?"
+          handleAction={handleActionDelete}
         />
       )}
     </div>

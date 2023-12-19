@@ -26,4 +26,6 @@ const HouseholdSchema = new mongoose.Schema(
         timestamps:true
     }
 );
-module.exports=mongoose.models.Household|| mongoose.model("Household",HouseholdSchema)
+const Household = mongoose.models.Household || mongoose.model("Household", HouseholdSchema);
+
+module.exports = Household;

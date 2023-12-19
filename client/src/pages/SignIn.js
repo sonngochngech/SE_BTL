@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -39,10 +40,6 @@ const SignIn=()=> {
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // console.log({
-        //     email: data.get('email'),
-        //     password: data.get('password'),
-        // });
         const value={
             email: data.get('email'),
             password:data.get('password')
@@ -50,8 +47,8 @@ const SignIn=()=> {
         dispatch(loginUser(value))
             .unwrap()
             .then(()=>{
-                navigate('/dashboard');
-                // window.location.reload();
+                navigate('/GetFACMana');
+                window.location.reload();
             }).catch((error)=>{
                 console.log('Login error:',error)
 
@@ -110,16 +107,6 @@ const SignIn=()=> {
                             Sign In
                         </Button>
                         <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Forgot password?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="#" variant="body2">
-                                    {"Don't have an account? Sign Up"}
-                                </Link>
-                            </Grid>
                         </Grid>
                     </Box>
                 </Box>

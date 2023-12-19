@@ -1,10 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { feeContributeState } from "../data";
+import { convertDate } from "../../../utils/function";
+import { contributionService } from "../../../redux/services/contributionService";
 
 export default function UpdateFeeContribute(props) {
-  const detail = feeContributeState.find((item) => item.id === props.id);
-  console.log(detail);
+  const detail = props.data.find((item) => item._id === props.id);
+  const [dataUpdate, setDataUpdate] = useState({
+    name: "",
+    startTime: "",
+    endTime: "",
+  });
+
+  useEffect(() => {
+    if (detail) {
+      setDataUpdate({
+        name: detail.name,
+        startTime: convertDate(detail.startTime),
+        endTime: convertDate(detail.endTime),
+      });
+    }
+  }, []);
+
+  const handleSubmit = async () => {
+    await contributionService.updateContribution(props.id, {
+      ...dataUpdate,
+      startTime: new Date(dataUpdate.startTime).toISOString(),
+      endTime: new Date(dataUpdate.endTime).toISOString(),
+    });
+    props.handleLoading();
+    props.handleClose();
+  };
 
   return (
     <div>
@@ -20,33 +45,46 @@ export default function UpdateFeeContribute(props) {
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Tên khoản đóng góp</Form.Label>
-              <Form.Control type="text" autoFocus value={detail.name} />
+              <Form.Control
+                type="text"
+                autoFocus
+                value={dataUpdate.name}
+                onChange={(e) => {
+                  setDataUpdate({ ...dataUpdate, name: e.target.value });
+                }}
+              />
             </Form.Group>
             <Form.Group
-              className="mb-3 d-flex justify-content-around"
+              className="mb-3 d-flex justify-content-between"
               controlId="exampleForm.ControlInput1"
             >
-              <div className="me-3">
+              <div className="me-3" style={{ width: "47%" }}>
                 <Form.Label>Ngày bắt đầu</Form.Label>
-                <Form.Control type="text" autoFocus value={detail.startDate} />
+                <Form.Control
+                  type="date"
+                  autoFocus
+                  value={dataUpdate.startTime}
+                  onChange={(e) => {
+                    setDataUpdate({ ...dataUpdate, startTime: e.target.value });
+                  }}
+                />
               </div>
-              <div>
+              <div style={{ width: "47%" }}>
                 <Form.Label>Ngày kết thúc</Form.Label>
-                <Form.Control type="text" autoFocus value={detail.endDate} />
+                <Form.Control
+                  type="date"
+                  autoFocus
+                  value={dataUpdate.endTime}
+                  onChange={(e) => {
+                    setDataUpdate({ ...dataUpdate, endTime: e.target.value });
+                  }}
+                />
               </div>
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Số tiền</Form.Label>
-              <Form.Control type="text" value={detail.money} />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Mô tả</Form.Label>
-              <Form.Control as="textarea" value={detail.description} />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={props.handleClose}>
+          <Button variant="primary" onClick={handleSubmit}>
             Xác nhận
           </Button>
         </Modal.Footer>

@@ -17,7 +17,7 @@ export default function ModalConfirm(props) {
           <Button variant="secondary" onClick={props.handleClose}>
             Thoát
           </Button>
-          <Button variant="primary" onClick={props.handleClose}>
+          <Button variant="primary" onClick={props.handleAction}>
             Xóa
           </Button>
         </Modal.Footer>

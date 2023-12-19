@@ -1,5 +1,6 @@
+
 import axios from "axios";
-import {base_url} from "../../utils/config";
+import {base_url, config} from "../../utils/config";
 
 
 const login = async (userData) => {
@@ -27,8 +28,20 @@ const logout = async () => {
         throw new Error(error.message);
     }
 }
+const changePassword=async (userData)=>{
+    try{
+        const response = await axios.post(`${base_url}auth/changePassword`,userData,config());
+    }
+    catch (e) {
+        alert("Sai thông tin tài khoản, vui lòng nhập lại  ")
+        throw new Error(e.message);
+    }
+
+
+}
 
 export const userService = {
     login,
-    logout
+    logout,
+    changePassword
 }
