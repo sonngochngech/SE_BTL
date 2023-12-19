@@ -12,6 +12,14 @@ const getFee = async () => {
     }
 }
 
+const getStatics=async()=>{
+    try{
+        const response=await  axios.get(`${base_url}statistics/getStatics`, config());
+        return response.data;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
 export const statisticService = {
-    getFee,
+    getFee,getStatics
 }

@@ -11,10 +11,26 @@ export const getFee = createAsyncThunk(
         }
     }
 )
+export const getStatics=createAsyncThunk(
+    'getStatics',
+    async (thunkAPI) => {
+        try {
+            return await statisticService.getStatics();
+        } catch (error) {
+            thunkAPI.rejectWithValue(error.message);
+        }
+    }
+
+)
+const staticState = {
+    fees: [],
+    status: "",
+}
+
 
 const statisticSlice = createSlice({
     name: "Statistic",
-    initialState: null,
+    initialState: staticState,
     reducers: [],
     extraReducers: (builder) => {
         builder
@@ -24,12 +40,20 @@ const statisticSlice = createSlice({
         .addCase(getFee.fulfilled, (state, action) => {
             state.contributions = action.payload;
             state.status = "Successful";
-            // console.log("aaa");
-            // console.log(state.contributions);
         })
         .addCase(getFee.rejected, (state, action) => {
             state.status = "Fail";
         })
+            .addCase(getStatics.pending, (state) => {
+                state.status = "loading";
+            })
+            .addCase(getStatics.fulfilled, (state, action) => {
+                state.statics = action.payload;
+                state.status = "Successful";
+            })
+            .addCase(getStatics.rejected, (state, action) => {
+                state.status = "Fail";
+            })
     }
 })
 

@@ -5,7 +5,7 @@ import React from 'react'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 
-function DetailDialog({ show }) {
+function DetailDialog({ show,row }) {
   const statistic = {
     houseHold: "Adam",
     fee: "500.000 vnd",
@@ -19,7 +19,7 @@ function DetailDialog({ show }) {
   return (
     <>
       <Dialog open={true} maxWidth="md" fullWidth>
-        <DialogTitle variant='h4'>Thông tin tài khoản</DialogTitle>
+        <DialogTitle variant='h4'>Thông tin thống kê</DialogTitle>
         <Divider variant='middle' color='black' />
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <Box
@@ -31,49 +31,32 @@ function DetailDialog({ show }) {
           >
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <TextField
-                  label='Chủ hộ'
-                  variant='outlined'
-                  defaultValue={statistic.houseHold}
-                  InputProps={{
-                    readOnly: true
-                  }}
-                />
+                {row?.contributionList?.map((fee)=>(
+                    <TextField
+                        label='Tên đóng góp'
+                        variant='outlined'
+                        defaultValue={fee.name}
+                        InputProps={{
+                          readOnly: true
+                        }}
+                    />
+                ))
+                }
 
-                <TextField
-                  label='Phí'
-                  variant='outlined'
-                  defaultValue={statistic.fee}
-                  InputProps={{
-                    readOnly: true
-                  }}
-                />
-                <TextField
-                  label='Ngày nộp'
-                  variant='outlined'
-                  defaultValue={statistic.paymentTime}
-                  InputProps={{
-                    readOnly: true
-                  }}
-                />
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  label='Số lượng khoản phí'
-                  variant='outlined'
-                  defaultValue={statistic.amount}
-                  InputProps={{
-                    readOnly: true
-                  }}
-                />
-                <TextField
-                  label='Trạng thái'
-                  variant='outlined'
-                  defaultValue={statistic.status ? "Đã nộp" : "Chưa nộp"}
-                  InputProps={{
-                    readOnly: true
-                  }}
-                />
+                {row?.feeList?.map((fee)=>(
+                    <TextField
+                        label='Tên phí'
+                        variant='outlined'
+                        defaultValue={fee.name}
+                        InputProps={{
+                          readOnly: true
+                        }}
+                    />
+                ))
+                }
+
               </Grid>
 
             </Grid>

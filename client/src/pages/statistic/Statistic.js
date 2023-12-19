@@ -1,6 +1,6 @@
 import Layout from '../Layout';
 import { Grid, Card, CardContent, Typography, CardHeader } from '@mui/material';
-import React, {useState}  from 'react';
+import React, {useEffect, useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,21 +9,31 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import DetailDialog from './DetailDialog';
+import {useDispatch, useSelector} from "react-redux";
+import {getHouseholdsBasedOnParams} from "../../redux/slices/householdSlice";
+import {getStatics} from "../../redux/slices/statisticSlice";
 
 
 const Statistic = () => {
     const [detailDialog, setDetailDialog] = useState(false);
-    function createData(name, money) {
-        return { name, money };
+    const dispatch=useDispatch();
+    const statistic=useSelector((state)=>state?.statistic?.statics);
+    const [selectedRow, setSelectedRow] = useState({});
+
+    useEffect(() => {
+        getStaticss();
+        // handleOnclickCreate();
+    }, [dispatch]);
+    const getStaticss = () => {
+        dispatch(getStatics())
     }
-    
-    const rows = [
-        createData('Nguyễn Văn An', 15000),
-        createData('Hoàng Ngọc Huy', 237000),
-        createData('Trương Quốc Đạt', 262000),
-        createData('Lưu Văn Trường', 30500),
-        createData('Nguyễn Quốc Anh', 356000),
-    ];
+    console.log(statistic);
+    const handleClickRow = (row) => {
+        setDetailDialog(true);
+        setSelectedRow(row);
+    }
+
+
 
     const content = (
         <>
@@ -32,7 +42,7 @@ const Statistic = () => {
                     <Card>
                         <CardHeader title="Tổng số tiền đã thu"></CardHeader>
                         <CardContent>
-                            <Typography fontSize={32}> 1010323 <span fontSize={16}>VND</span> </Typography>
+                            <Typography fontSize={32}> {statistic?.feeSum} <span fontSize={16}>VND</span> </Typography>
                         </CardContent>
                     </Card>
                 </Grid>
@@ -40,31 +50,29 @@ const Statistic = () => {
                     <Card>
                         <CardHeader title="Tổng số hộ đã nộp"></CardHeader>
                         <CardContent>
-                            <Typography fontSize={32}> 12</Typography>
+                            <Typography fontSize={32}>{statistic?.householdListSize}</Typography>
                         </CardContent>
                     </Card>
                 </Grid>
                 <Grid item xs={12}>
-                    {detailDialog ? <DetailDialog show={setDetailDialog} /> : null}
+                    {detailDialog ? <DetailDialog show={setDetailDialog}  row={selectedRow}/> : null}
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead sx={{backgroundColor:"#C4C4C4"}}>
                                 <TableRow >
                                     <TableCell>Tên hộ</TableCell>
-                                    <TableCell align="left">Số tiền hộ đã nộp</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.map((row) => (
+                                {statistic?.householdList?.map((row) => (
                                     <TableRow
                                         key={row.name}
                                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        onClick={() => setDetailDialog(true)}
+                                        onClick={() => handleClickRow(row)}
                                     >
                                         <TableCell component="th" scope="row">
                                             {row.name}
                                         </TableCell>
-                                        <TableCell align="left">{row.money}</TableCell>
                                     
                                     </TableRow>
                                 ))}
