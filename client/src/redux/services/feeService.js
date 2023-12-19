@@ -15,6 +15,36 @@ const getALlFees = async () => {
   }
 };
 
+const updateFee = async (id, data) => {
+  try {
+    const response = await axios.put(`${base_url}fees/${id}`, data, config());
+    return response.data.fees;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const createFee = async (data) => {
+  try {
+    const response = await axios.post(`${base_url}fees`, data, config());
+    return response.data.fees;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const deleteFee = async (id) => {
+  try {
+    const response = await axios.delete(`${base_url}fees/${id}`, config());
+    return response.data.fees;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 export const feeService = {
   getALlFees,
+  createFee,
+  updateFee,
+  deleteFee,
 };

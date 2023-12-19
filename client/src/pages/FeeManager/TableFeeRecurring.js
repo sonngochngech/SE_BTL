@@ -4,10 +4,10 @@ import { Button, Table } from "react-bootstrap";
 import { TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import CreateFeeRecurring from "./Component/CreateFeeRecurring";
 import UpdateFeeRecurring from "./Component/UpdateFeeRecurring";
-import { feeState } from "./data";
 import ModalConfirm from "./Component/ModalConfirm";
+import { feeService } from "../../redux/services/feeService";
 
-export default function TableFeeRecurring() {
+export default function TableFeeRecurring(props) {
   const [id, setId] = useState(null);
   const [modalCreate, setModalCreate] = useState(false);
   const [modalUpdate, setModalUpdate] = useState(false);
@@ -34,6 +34,16 @@ export default function TableFeeRecurring() {
     }
   };
 
+  const handleLoading = () => {
+    props.handleLoading();
+  };
+
+  const handleActionDelete = async () => {
+    await feeService.deleteFee(id);
+    setModalDelete(false);
+    props.handleLoading();
+  };
+
   return (
     <div>
       <React.Fragment>
@@ -51,27 +61,27 @@ export default function TableFeeRecurring() {
               <TableCell>Loại</TableCell>
               <TableCell>Số tiền</TableCell>
               <TableCell>Tần suất</TableCell>
-              <TableCell>Mô tả</TableCell>
               <TableCell>Hành động</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {feeState?.map((row, index) => (
-              <TableRow key={row.id}>
+            {props.data?.map((row, index) => (
+              <TableRow key={row._id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{row.name}</TableCell>
-                <TableCell>{row.feeType ? row.feeType.name : null}</TableCell>
-                <TableCell>{row.money}</TableCell>
                 <TableCell>
-                  {row.frequency ? row.frequency.name : null}
+                  {row.feeType === "Household" ? "Hộ khẩu" : "Cá nhân"}
                 </TableCell>
-                <TableCell>{row.description}</TableCell>
+                <TableCell>{row.amount}</TableCell>
+                <TableCell>
+                  {row.frequency === "yearly" ? "Hàng năm" : "Hàng tháng"}
+                </TableCell>
                 <TableCell>
                   <Button
                     variant="success"
                     className="me-3"
                     onClick={() => {
-                      handleShowUpdate(row.id);
+                      handleShowUpdate(row._id);
                     }}
                   >
                     Cập nhật
@@ -80,6 +90,7 @@ export default function TableFeeRecurring() {
                     variant="danger"
                     onClick={() => {
                       handleShowDelete();
+                      setId(row._id);
                     }}
                   >
                     Xóa
@@ -96,6 +107,7 @@ export default function TableFeeRecurring() {
           show={modalCreate}
           handleClose={handleClose}
           handleShow={handleShowCreate}
+          handleLoading={handleLoading}
         />
       )}
 
@@ -105,6 +117,8 @@ export default function TableFeeRecurring() {
           handleClose={handleClose}
           handleShow={handleShowUpdate}
           id={id}
+          handleLoading={handleLoading}
+          data={props.data}
         />
       )}
 
@@ -115,6 +129,7 @@ export default function TableFeeRecurring() {
           handleShow={handleShowDelete}
           title="Xóa thông tin khoản phí"
           description="Bạn có chắc chắn xóa khoản phí này?"
+          handleAction={handleActionDelete}
         />
       )}
     </div>

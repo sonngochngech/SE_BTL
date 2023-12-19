@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { feeState } from "../data";
+import { feeService } from "../../../redux/services/feeService";
 
 export default function UpdateFeeRecurring(props) {
-  const detail = feeState.find((item) => item.id === props.id);
+  const detail = props.data.find((item) => item._id === props.id);
+  const [dataUpdate, setDataUpdate] = useState({
+    name: "",
+    amount: 0,
+    feeType: "",
+    frequency: "",
+  });
+
+  useEffect(() => {
+    if (detail) {
+      setDataUpdate({
+        name: detail.name,
+        amount: detail.amount,
+        feeType: detail.feeType,
+        frequency: detail.frequency,
+      });
+    }
+  }, []);
+
+  const handleSubmit = async () => {
+    await feeService.updateFee(props.id, dataUpdate);
+    props.handleLoading();
+    props.handleClose();
+  };
+
   return (
     <div>
       <Modal
@@ -18,36 +42,59 @@ export default function UpdateFeeRecurring(props) {
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Tên khoản phí</Form.Label>
-              <Form.Control type="text" autoFocus value={detail.name} />
+              <Form.Control
+                type="text"
+                autoFocus
+                value={dataUpdate.name}
+                onChange={(e) => {
+                  setDataUpdate({ ...dataUpdate, name: e.target.value });
+                }}
+              />
             </Form.Group>
             <Form.Group
               className="mb-3 d-flex justify-content-around"
               controlId="exampleForm.ControlInput1"
             >
-              <Form.Select className="me-4" value={detail.feeType.id}>
+              <Form.Select
+                className="me-4"
+                value={dataUpdate.feeType}
+                onChange={(e) => {
+                  setDataUpdate({ ...dataUpdate, feeType: e.target.value });
+                }}
+              >
                 <option>Loại</option>
-                <option value="1">Hộ khẩu</option>
-                <option value="2">Cá nhân</option>
+                <option value="Household">Hộ khẩu</option>
+                <option value="Individual">Cá nhân</option>
               </Form.Select>
 
-              <Form.Select value={detail.frequency.id}>
+              <Form.Select
+                value={dataUpdate.frequency}
+                onChange={(e) => {
+                  setDataUpdate({ ...dataUpdate, frequency: e.target.value });
+                }}
+              >
                 <option>Tần suất</option>
-                <option value="1">1 tháng</option>
-                <option value="2">1 năm</option>
+                <option value="monthly">1 tháng</option>
+                <option value="yearly">1 năm</option>
               </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Số tiền</Form.Label>
-              <Form.Control type="text" value={detail.money} />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Mô tả</Form.Label>
-              <Form.Control as="textarea" value={detail.description} />
+              <Form.Control
+                type="text"
+                value={dataUpdate.amount}
+                onChange={(e) => {
+                  setDataUpdate({
+                    ...dataUpdate,
+                    amount: Number(e.target.value),
+                  });
+                }}
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={props.handleClose}>
+          <Button variant="primary" onClick={handleSubmit}>
             Xác nhận
           </Button>
         </Modal.Footer>

@@ -9,7 +9,7 @@ export default function CreateFeeContribute(props) {
     endTime: "",
     amount: 0,
   });
-  console.log(dataCreate);
+
   const handleSubmit = async () => {
     await contributionService.createContribution({
       ...dataCreate,
@@ -42,7 +42,7 @@ export default function CreateFeeContribute(props) {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Số lượng</Form.Label>
+              <Form.Label>Số tiền</Form.Label>
               <Form.Control
                 type="number"
                 value={dataCreate.amount}

@@ -9,6 +9,7 @@ export default function UpdateFeeContribute(props) {
     name: "",
     startTime: "",
     endTime: "",
+    amount: 0,
   });
 
   useEffect(() => {
@@ -17,6 +18,7 @@ export default function UpdateFeeContribute(props) {
         name: detail.name,
         startTime: convertDate(detail.startTime),
         endTime: convertDate(detail.endTime),
+        amount: detail.amount,
       });
     }
   }, []);
@@ -51,6 +53,19 @@ export default function UpdateFeeContribute(props) {
                 value={dataUpdate.name}
                 onChange={(e) => {
                   setDataUpdate({ ...dataUpdate, name: e.target.value });
+                }}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Số tiền</Form.Label>
+              <Form.Control
+                type="text"
+                value={dataUpdate.amount}
+                onChange={(e) => {
+                  setDataUpdate({
+                    ...dataUpdate,
+                    amount: Number(e.target.value),
+                  });
                 }}
               />
             </Form.Group>
