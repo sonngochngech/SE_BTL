@@ -45,28 +45,35 @@ export default function MainListItems() {
           }
           nelement={<></>}
         />
-        <Accordion.Item eventKey="1">
-          <Accordion.Header>
-            <ListItemIcon>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <span style={{ fontSize: "15px" }}>Quản lý khoản phí</span>
-              }
-            />
-          </Accordion.Header>
-          <Accordion.Body>
-            <ListGroup>
-              <ListGroup.Item onClick={() => navigate("/fee-recurring")}>
-                Phí thu
-              </ListGroup.Item>
-              <ListGroup.Item onClick={() => navigate("/fee-contribution")}>
-                Phí đóng góp
-              </ListGroup.Item>
-            </ListGroup>
-          </Accordion.Body>
-        </Accordion.Item>
+        <AdminWrap
+            e
+            element={
+              <Accordion.Item eventKey="1">
+                <Accordion.Header>
+                  <ListItemIcon>
+                    <PeopleIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                      primary={
+                        <span style={{ fontSize: "15px" }}>Quản lý khoản phí</span>
+                      }
+                  />
+                </Accordion.Header>
+                <Accordion.Body>
+                  <ListGroup>
+                    <ListGroup.Item onClick={() => navigate("/fee-recurring")}>
+                      Phí thu
+                    </ListGroup.Item>
+                    <ListGroup.Item onClick={() => navigate("/fee-contribution")}>
+                      Đóng góp
+                    </ListGroup.Item>
+                  </ListGroup>
+                </Accordion.Body>
+              </Accordion.Item>
+            }
+            nelement={<></>}
+        />
+
         <AdminWrap
           e
           element={
@@ -102,7 +109,7 @@ export default function MainListItems() {
               <LayersIcon />
             </ListItemIcon>
             <ListItemText
-              primary={<span style={{ fontSize: "15px" }}>Quản lý phí</span>}
+              primary={<span style={{ fontSize: "15px" }}>Phí và đóng góp</span>}
             />
           </Accordion.Header>
           <Accordion.Body>

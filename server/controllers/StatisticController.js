@@ -29,15 +29,20 @@ const getInformation = asyncHandler(async (req, res) => {
 
         if (feeHouseholdRelSchema) {
             for (let i of feeHouseholdRelSchema) {
-                feeSum = feeSum + i.amount;
-                householdSet.add(i.household.toString()); // Convert ObjectId to string for Set comparison
+                if(i.status){
+                    feeSum = feeSum + i.amount;
+                    householdSet.add(i.household.toString());
+                }
+                // Convert ObjectId to string for Set comparison
             }
         }
 
         if (contributionHouseholdRelSchema) {
             for (let i of contributionHouseholdRelSchema) {
-                feeSum= feeSum+ i.amount;
-                householdSet.add(i.household.toString()); // Convert ObjectId to string for Set comparison
+                if(i.amount>0){
+                    feeSum= feeSum+ i.amount;
+                    householdSet.add(i.household.toString());
+                }// Convert ObjectId to string for Set comparison
             }
         }
 

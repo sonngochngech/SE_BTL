@@ -32,18 +32,18 @@ const createInfo = (
 	};
 };
 export const canBoInfos = [
-	createInfo("email", "Email", "Meow12@meow.com", "email"),
-	createInfo("password", "Mật khẩu", "Meow", "password"),
-	createInfo("firstName", "Tên", "Meow"),
-	createInfo("lastname", "Họ", "Meow"),
-	createInfo("phoneNumber", "SĐT", "Meow"),
-	createInfo("sex", "Giới", "Meow"),
-	createInfo("position", "Chức danh", "Leader", "text", [
+	createInfo("email", "Email", "", "email"),
+	createInfo("password", "Mật khẩu", "", "password"),
+	createInfo("firstName", "Tên", ""),
+	createInfo("lastname", "Họ", ""),
+	createInfo("phoneNumber", "SĐT", ""),
+	createInfo("sex", "Giới", ""),
+	createInfo("position", "Chức danh", "", "text", [
 		"Leader",
 		"Officer",
 		"DeputyLeader",
 	]),
-	createInfo("role", "Role", "Meow"),
+	// createInfo("role", "Role", ""),
 ];
 const CanBoAdd = () => {
 	const dispatch = useDispatch();

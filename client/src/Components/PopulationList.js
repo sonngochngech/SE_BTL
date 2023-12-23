@@ -45,7 +45,7 @@ function PopulationList() {
 
   const content = (
       <div style={{ textAlign: 'center' }}>
-        <h2>Danh sách nhân khẩu</h2>
+        <h2>Thông tin hộ khẩu</h2>
         {household && (
             <div key={household._id}>
               {/* <h3>Hộ khẩu số {household.householdNumber}</h3> */}

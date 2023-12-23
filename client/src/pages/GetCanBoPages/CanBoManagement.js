@@ -97,11 +97,11 @@ const CanBoList = ({ setUserToModify }) => {
 							<TableCell>
 								{currentUser.email != row.email ? (
 									<Button variant={"outlined"} onClick={() => handleClick(row)}>
-										Chỉnh sửa
+										Xóa cán bộ
 									</Button>
 								) : (
 									<Button variant={"contained"} disabled>
-										Chỉnh sửa
+										Xóa cán bộ
 									</Button>
 								)}
 							</TableCell>

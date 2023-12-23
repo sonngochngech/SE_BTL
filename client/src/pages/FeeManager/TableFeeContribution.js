@@ -59,7 +59,7 @@ export default function TableFeeContribution(props) {
             <TableRow>
               <TableCell>#</TableCell>
               <TableCell>Tên khoản đóng góp</TableCell>
-              <TableCell>Số tiền</TableCell>
+              {/*<TableCell>Số tiền</TableCell>*/}
               <TableCell>Thời gian bắt đầu</TableCell>
               <TableCell>Thời gian kết thúc</TableCell>
               <TableCell>Hành động</TableCell>
@@ -71,7 +71,7 @@ export default function TableFeeContribution(props) {
                   <TableRow key={row._id}>
                     <TableCell>{index + 1}</TableCell>
                     <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.amount}</TableCell>
+                    {/*<TableCell>{row.amount}</TableCell>*/}
                     <TableCell>{convertDate(row.startTime)}</TableCell>
                     <TableCell>{convertDate(row.endTime)}</TableCell>
                     <TableCell>
