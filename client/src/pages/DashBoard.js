@@ -102,7 +102,7 @@ export default function Dashboard() {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
-                            Dashboard
+                            Quan ly to dan pho
                         </Typography>
                         <UserDropdown></UserDropdown>
                     </Toolbar>
